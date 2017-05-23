@@ -33,7 +33,7 @@ apa = Apa(8)
 
 # initialise the SPI bus using defaults.
 # Pin 13 of the microbit is therefore used as CI (SCLCK) - the clock
-# Pin 15 of the ,icorbit is used as DI (MOSI) - tha data
+# Pin 15 of the microbit is used as DI (MOSI) - the data
 
 spi.init()
 
