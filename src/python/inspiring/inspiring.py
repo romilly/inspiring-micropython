@@ -3,7 +3,7 @@ from microbit import *
 class Apa:
     def __init__(self, num_leds):
         self.buffer = bytearray(4)
-        self.leds = [(0xE0,0,0x0,0) for i in range(num_leds)]
+        self.leds = [bytearray([0xE0,0,0x0,0]) for i in range(num_leds)]
         
     def write(self):
         spi.write(b'\x00\x00\x00\x00')
@@ -12,19 +12,41 @@ class Apa:
                 self.buffer[i] = led[i]
             spi.write(self.buffer)
         spi.write(b'\x00\x00\x00\x00')
+        
+    def limit(self, intensity):
+        # intensity ranges from 0 (off) to 31 (very bright)
+        # but leading three bits must be set to 1, so add 0xE0
+        offset = 0xE0
+        if intensity < 0: return offset
+        if intensity > 31: return offset + 31
+        return offset + intensity
             
     def set_led(self, n, intensity, r, b, g):
-        self.leds[n] = (intensity, r, b,g)
+        self.leds[n][0] = 0xE0 + self.limit(intensity)
+        self.leds[n][1] = r
+        self.leds[n][2] = b
+        self.leds[n][3] = g        
+        
        
-
+# bar has 8 leds
 apa = Apa(8)
+
+# initialise the SPI bus using defaults.
+# Pin 13 of the microbit is therefore used as CI (SCLCK) - the clock
+# Pin 15 of the ,icorbit is used as DI (MOSI) - tha data
+
 spi.init()
+
+# turn each LED blue
+
 for i in range(8):
-    apa.set_led(i, 0xF0, 0x30, 0x0, 0x0)
+    apa.set_led(i, 10, 0x30, 0x0, 0x0)
     apa.write()
     sleep(100)
+# turn each LED off
+
 for i in range(8):
-    apa.set_led(i, 0xe0, 0x00, 0x0, 0x0)
+    apa.set_led(i, 0, 0x00, 0x0, 0x0)
     apa.write()
     sleep(100)
  

@@ -9,12 +9,13 @@ This is an experimental micropython library for Alex Eames' (@RaspiTV)
 
 I have only done limited testing so far.
 
-The software currently uses more memory than it needs to.
+This version now uses a list of bytearrays in order to reduce memory requirements,
+and intensity values should be in the range 0-31.
 
 This is not a problem if you are just driving a short strip of LEDs,
 but it would be if you were driving larger LED arrays or doing lots of other things as well.
 
-My next priority is to reduce memory usage and test the code with larger LED arrays.
+My next priority is to test the code with larger LED arrays.
 
 ### Hardware
 
@@ -36,4 +37,14 @@ undoubtedly exceed the power available from the micro:bit.
 Once I have a larger LED array to play with I'll rewire using an external
 power supply, and I may use a level shifter for the SPI lines.
 
+## Usage
+
+The file `inspiring.py` contains a simple example.
+
+Your code should:
+1. Create an instance of Apa, specifying the number of LEDs.
+1. Initialise the SPI bus.
+1. Set one or more LEDs, specifying the LED number, counting from 0), the intensity (brightness) ranging from 0 (off) to 31 (very bright)
+and the r, b, g values, which are integers in the range 0-255.
+1. Tell the Apa instance to show the updated LEDs.
 
