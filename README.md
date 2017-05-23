@@ -48,3 +48,5 @@ Your code should:
 and the r, b, g values, which are integers in the range 0-255.
 1. Tell the `Apa` instance to show the updated LEDs.
 
+Then repeat steps 3 and 4 as necessary.
+

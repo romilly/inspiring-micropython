@@ -22,7 +22,7 @@ class Apa:
         return offset + intensity
             
     def set_led(self, n, intensity, r, b, g):
-        self.leds[n][0] = 0xE0 + self.limit(intensity)
+        self.leds[n][0] = self.limit(intensity)
         self.leds[n][1] = r
         self.leds[n][2] = b
         self.leds[n][3] = g        
