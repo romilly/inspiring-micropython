@@ -42,9 +42,9 @@ power supply, and I may use a level shifter for the SPI lines.
 The file `inspiring.py` contains a simple example.
 
 Your code should:
-1. Create an instance of Apa, specifying the number of LEDs.
+1. Construct an instance of `Apa`, specifying the number of LEDs.
 1. Initialise the SPI bus.
 1. Set one or more LEDs, specifying the LED number, counting from 0), the intensity (brightness) ranging from 0 (off) to 31 (very bright)
 and the r, b, g values, which are integers in the range 0-255.
-1. Tell the Apa instance to show the updated LEDs.
+1. Tell the `Apa` instance to show the updated LEDs.
 
