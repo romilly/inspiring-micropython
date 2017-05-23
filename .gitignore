@@ -137,3 +137,6 @@ ENV/
 
 # Resources
 plan/resources/
+
+# idea files, since most people won't be using pycharm
+.idea/
