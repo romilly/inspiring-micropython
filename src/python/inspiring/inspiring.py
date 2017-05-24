@@ -1,5 +1,7 @@
 from microbit import *
 
+# the API is likely to change, and may change in ways that break existing code.
+
 class Apa:
     def __init__(self, num_leds):
         self.buffer = bytearray(4)

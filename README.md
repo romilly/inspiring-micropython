@@ -3,6 +3,8 @@
 This is an experimental micropython library for Alex Eames' (@RaspiTV)
 [InsPiRing](https://www.kickstarter.com/projects/raspitv/raspio-inspiring-connect-rgb-led-shapes-sculpt-you/description) strips.
 
+The API will almost certainly change, and may change in ways that break existing code!
+
 ![InsPiRing with microbit](plan/images/inspiring.jpg)
 
 ### Software
