@@ -7,7 +7,7 @@ class Apa:
         self.buffer = bytearray(4)
         self.leds = [bytearray([0xE0,0,0x0,0]) for i in range(num_leds)]
         
-    def write(self):
+    def show(self):
         spi.write(b'\x00\x00\x00\x00')
         for led in self.leds:
             for i in range(4):
@@ -22,33 +22,66 @@ class Apa:
         if intensity < 0: return offset
         if intensity > 31: return offset + 31
         return offset + intensity
-            
-    def set_led(self, n, intensity, r, b, g):
+
+    # allow indexing
+    def __getitem__(self, item):
+        return self.leds[item]
+
+    # allow indexed assignment
+    def __setitem__(self, key, value):
+        self.set_led(key, *value)
+
+    # low-level set method allows default intensity, adjusts intensity value
+    def set_led(self, n, r, b, g, intensity=15):
         self.leds[n][0] = self.limit(intensity)
         self.leds[n][1] = r
         self.leds[n][2] = b
         self.leds[n][3] = g        
+
+def blue_demo():
+    # bar has 8 leds
+    apa = Apa(8)
+
+    # initialise the SPI bus using defaults.
+    # Pin 13 of the microbit is therefore used as CI (SCLCK) - the clock
+    # Pin 15 of the microbit is used as DI (MOSI) - the data
+
+    spi.init()
+
+    # turn each LED blue
+
+    for i in range(8):
+        apa[i] = (0x30, 0x0, 0x0, 10)
+        apa.show()
+        sleep(100)
+    # turn each LED off
+
+    for i in range(8):
+        apa[i] = (0x0, 0x0, 0x0, 0x0)
+        apa.show()
+        sleep(100)
         
-       
-# bar has 8 leds
-apa = Apa(8)
+def multi_colours():
+    num_leds = 8
+    apa = Apa(8)
+    spi.init()
+    # repeat until button A is pressed
+    while button_a.get_presses() == 0:
+        for i in range(num_leds):
+            apa.set_led(i, 0xFF, 0 ,0)
+            apa.show()
+            sleep(100)
+            apa.set_led(i, 0, 0xFF ,0)
+            apa.show()
+            sleep(100)
+            apa.set_led(i, 0, 0 ,0xFF)
+            apa.show()
+            sleep(100)
+            apa.set_led(i, 0, 0, 0, 0)
+            apa.show()
+            sleep(100)
 
-# initialise the SPI bus using defaults.
-# Pin 13 of the microbit is therefore used as CI (SCLCK) - the clock
-# Pin 15 of the microbit is used as DI (MOSI) - the data
+if __name__ == '__main__':
+    #blue_demo()
+    multi_colours()
 
-spi.init()
-
-# turn each LED blue
-
-for i in range(8):
-    apa.set_led(i, 10, 0x30, 0x0, 0x0)
-    apa.write()
-    sleep(100)
-# turn each LED off
-
-for i in range(8):
-    apa.set_led(i, 0, 0x00, 0x0, 0x0)
-    apa.write()
-    sleep(100)
- 
