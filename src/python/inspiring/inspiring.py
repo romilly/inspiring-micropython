@@ -1,6 +1,8 @@
 from microbit import *
 
 # the API is likely to change, and may change in ways that break existing code.
+DELAY = 200
+
 
 class Apa:
     def __init__(self, num_leds):
@@ -70,16 +72,16 @@ def multi_colours():
         for i in range(num_leds):
             apa.set_led(i, 0xFF, 0 ,0)
             apa.show()
-            sleep(100)
+            sleep(DELAY)
             apa.set_led(i, 0, 0xFF ,0)
             apa.show()
-            sleep(100)
+            sleep(DELAY)
             apa.set_led(i, 0, 0 ,0xFF)
             apa.show()
-            sleep(100)
+            sleep(DELAY)
             apa.set_led(i, 0, 0, 0, 0)
             apa.show()
-            sleep(100)
+            sleep(DELAY)
 
 if __name__ == '__main__':
     #blue_demo()
